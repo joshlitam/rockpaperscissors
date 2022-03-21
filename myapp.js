@@ -1,11 +1,14 @@
 console.log("Hello, world!")
 
 let computerScore = 0;
-let playerScore = 0;
+let playerScore = 4;
+let playerSelection = ""
+let hand = ""
+let gameWinner = ""
+let message = "The score is "
 
 function computerPlay() {
     const number = Math.floor(Math.random() * 3) + 1;
-    let hand = ""
 
     switch(number) {
         case 1: 
@@ -18,7 +21,7 @@ function computerPlay() {
         hand = "paper";
         break;
     }
-    console.log(hand)
+
     return hand
 }
 
@@ -72,11 +75,12 @@ function playRound(playerSelection, computerSelection) {
             break;
     }
 
-    return roundMessage;
+    let alertMessage = alert(roundMessage)
+    return alertMessage;
 }
 
 function askPlayer() {
-    const playerSelection = prompt("Enter your selection", "Rock, Paper, Scissors").toLowerCase(); 
+    playerSelection = prompt("Enter your selection", "Rock, Paper, Scissors").toLowerCase(); 
     return playerSelection
 }
 
@@ -98,4 +102,77 @@ function game() {
     computerScore = 0;
 }
 
-console.log(playerSelection, computerPlay());
+let body = document.body
+let buttons = [];
+
+let rockBtn = document.createElement('button');
+rockBtn.name = "Rock";
+rockBtn.innerHTML = "Rock";
+
+let scissorsBtn = document.createElement('button');
+scissorsBtn.name = "Scissors";
+scissorsBtn.innerHTML = "Scissors";
+
+let paperBtn = document.createElement('button');
+paperBtn.name = "Paper";
+paperBtn.innerHTML = "Paper";
+
+let playerText = document.createElement('div');
+playerText.innerHTML = "Your hand: ";
+
+let computerText = document.createElement('div');
+computerText.innerHTML = "Computer's hand: ";
+
+let playerScoreText = document.createElement('div');
+playerScoreText.innerHTML = "Your score: " + playerScore;
+
+let computerScoreText = document.createElement('div');
+computerScoreText.innerHTML = "Computer's score: " + computerScore;
+
+let texts = [];
+texts.push(playerText, playerScoreText, computerText, computerScoreText)
+console.log(texts[1])
+
+for (let i = 0; i < texts.length; i++) {
+    body.appendChild(texts[i]);
+}
+
+buttons.push(rockBtn, scissorsBtn, paperBtn);
+console.log(buttons);
+
+for (let i = 0; i < 3; i++) {
+    let playerHand = buttons[i].name.toLowerCase()
+
+    body.appendChild(buttons[i]);
+    buttons[i].addEventListener("click", () => {
+        playRound(playerHand, computerPlay());
+        playerText.innerHTML = "Your hand: " + playerHand
+        computerText.innerHTML = "Computer's hand: " + hand
+        playerScoreText.innerHTML = "Your score: " + playerScore
+        computerScoreText.innerHTML = "Computer's Score: " + computerScore
+
+        if (playerScore == 5 || computerScore == 5) {
+            if (playerScore > computerScore) {
+                message += "Player: " + playerScore + " , Computer: " + computerScore + " , Player wins!"
+            } else {
+                message += "Player: " + playerScore + " , Computer: " + computerScore + " , Computer wins!"
+            }
+            playerScore = 0;
+            computerScore = 0;
+            playerText.innerHTML = "Your hand: " + playerHand
+            computerText.innerHTML = "Computer's hand: " + hand
+            playerScoreText.innerHTML = "Your score: " + playerScore
+            computerScoreText.innerHTML = "Computer's Score: " + computerScore
+            gameEnd();
+        }
+    })
+}
+
+
+
+function gameEnd() {
+    return gameAlert = alert(message)
+}
+
+
+
