@@ -1,7 +1,7 @@
 console.log("Hello, world!")
 
 let computerScore = 0;
-let playerScore = 4;
+let playerScore = 0;
 let playerSelection = ""
 let hand = ""
 let gameWinner = ""
